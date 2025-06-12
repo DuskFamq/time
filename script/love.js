@@ -25,7 +25,7 @@ function init() {
     if (loaded) return;
     loaded = true;
     var mobile = window.isDevice;
-    var koef = mobile ? window.devicePixelRatio || 1 : 1;
+    var koef = mobile ? 0.5 : 1;
     var canvas = document.getElementById("heart");
     var ctx = canvas.getContext("2d");
     var width = (canvas.width = koef * innerWidth);
@@ -64,7 +64,7 @@ function init() {
 
     function setupPoints() {
         pointsOrigin = [];
-        let heartScale = mobile ? Math.min(width, height) / 2.7 : Math.min(width, height) / 4;
+        let heartScale = mobile ? Math.min(width, height) / 2.7 : Math.min(width, height) / 4; // адаптивный масштаб
         let dr = mobile ? 0.3 : 0.1;
 
         for (let i = 0; i < Math.PI * 2; i += dr)
@@ -105,8 +105,7 @@ function init() {
         };
     }
 
-    var config = { traceK: mobile ? 0.25 : 0.4, timeDelta: mobile ? 0.4 : 0.6 };
-
+    var config = { traceK: 0.4, timeDelta: 0.6 };
     var time = 0;
 
     function pulse(kx, ky) {
@@ -158,7 +157,7 @@ function init() {
             }
 
             ctx.fillStyle = u.f;
-            u.trace.forEach((t) => ctx.fillRect(t.x, t.y, mobile ? 2 : 1, mobile ? 2 : 1));
+            u.trace.forEach((t) => ctx.fillRect(t.x, t.y, 1, 1));
         }
 
         drawText();
@@ -167,8 +166,6 @@ function init() {
 
     loop();
 }
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     init();
