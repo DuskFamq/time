@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Время Вместе</title>
+    <link rel="stylesheet" href="styles/love.css" />
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+        }
+
+        #elapsed-time {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px 30px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .time-value {
+            text-align: center;
+        }
+
+            .time-value span {
+                display: block;
+                font-size: 1.8em;
+                font-weight: bold;
+                color: #ff5555;
+            }
+    </style>
+</head>
+<body>
+
+    <canvas id="heart"></canvas>
+
+    <div id="elapsed-time">
+        <div class="time-value"><span id="years">0</span>лет</div>
+        <div class="time-value"><span id="months">0</span>месяцей</div>
+        <div class="time-value"><span id="days">0</span>дней</div>
+        <div class="time-value"><span id="hours">0</span>часов</div>
+        <div class="time-value"><span id="minutes">0</span>минут</div>
+        <div class="time-value"><span id="seconds">0</span>секунд</div>
+    </div>
+
+    <script src="script/love.js"></script>
+    <script>
+        const startTime = new Date('2025-04-13T00:00:00');
+
+        function updateElapsedTime() {
+            const currentTime = new Date();
+            let diff = currentTime - startTime;
+
+            const msInSecond = 1000;
+            const msInMinute = msInSecond * 60;
+            const msInHour = msInMinute * 60;
+            const msInDay = msInHour * 24;
+            const msInMonth = msInDay * 30.44;
+            const msInYear = msInDay * 365.25;
+
+            const years = Math.floor(diff / msInYear); diff %= msInYear;
+            const months = Math.floor(diff / msInMonth); diff %= msInMonth;
+            const days = Math.floor(diff / msInDay); diff %= msInDay;
+            const hours = Math.floor(diff / msInHour); diff %= msInHour;
+            const minutes = Math.floor(diff / msInMinute); diff %= msInMinute;
+            const seconds = Math.floor(diff / msInSecond);
+
+            document.getElementById("years").textContent = years;
+            document.getElementById("months").textContent = months;
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+        }
+
+        setInterval(updateElapsedTime, 1000);
+        updateElapsedTime();
+    </script>
+</body>
+</html>
