@@ -34,24 +34,26 @@
         color: #ff5555;
     }
 
-/* 📱 Мобильная адаптация */
 @media (max-width: 600px) {
     #elapsed-time {
+        flex-wrap: nowrap;
         flex-direction: row;
-        gap: 10px;
-        padding: 15px 10px;
-        font-size: 1em;
-        bottom: 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100vw;
+        padding: 10px;
     }
 
     .time-value {
-        min-width: 50px;
+        min-width: 70px;
+        font-size: 0.9em;
     }
 
         .time-value span {
-            font-size: 1.4em;
+            font-size: 1.3em;
         }
 }
+
 
 canvas {
     position: absolute;
