@@ -64,7 +64,7 @@ function init() {
 
     function setupPoints() {
         pointsOrigin = [];
-        let heartScale = Math.min(width, height) / 4; // адаптивный масштаб
+        let heartScale = mobile ? Math.min(width, height) / 2.7 : Math.min(width, height) / 4;
         let dr = mobile ? 0.3 : 0.1;
 
         for (let i = 0; i < Math.PI * 2; i += dr)
