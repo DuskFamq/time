@@ -14,7 +14,7 @@ window.requestAnimationFrame =
       element.__lastTime = currTime + timeToCall;
     };
   })();
-  
+
 window.isDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
   (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
 );
@@ -39,7 +39,6 @@ function init() {
     ctx.font = "60px Arial";
     ctx.fillStyle = "lightblue";
     ctx.textAlign = "center";
-
     ctx.fillText("", width / 2, height / 2.2 + 400);
   }
 
@@ -59,35 +58,36 @@ function init() {
     return [dx + pos[0] * sx, dy + pos[1] * sy];
   }
 
+  var pointsOrigin = [];
+  var heartPointsCount = 0;
+  var targetPoints = [];
+
+  function setupPoints() {
+    pointsOrigin = [];
+    let heartScale = Math.min(width, height) / 4; // адаптивный масштаб
+    let dr = mobile ? 0.3 : 0.1;
+
+    for (let i = 0; i < Math.PI * 2; i += dr)
+      pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale, heartScale / 16, 0, 0));
+    for (let i = 0; i < Math.PI * 2; i += dr)
+      pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale * 0.8, heartScale / 20, 0, 0));
+    for (let i = 0; i < Math.PI * 2; i += dr)
+      pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale * 0.6, heartScale / 28, 0, 0));
+
+    heartPointsCount = pointsOrigin.length;
+  }
+
+  setupPoints();
+
   window.addEventListener("resize", function () {
     width = canvas.width = koef * innerWidth;
     height = canvas.height = koef * innerHeight;
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.fillRect(0, 0, width, height);
+    setupPoints(); // Перестроим точки при изменении размера
   });
 
   var traceCount = mobile ? 20 : 50;
-  var pointsOrigin = [];
-  var dr = mobile ? 0.3 : 0.1;
-  for (var i = 0; i < Math.PI * 2; i += dr)
-    pointsOrigin.push(scaleAndTranslate(heartPosition(i), 310, 19, 0, 0));
-  for (var i = 0; i < Math.PI * 2; i += dr)
-    pointsOrigin.push(scaleAndTranslate(heartPosition(i), 250, 15, 0, 0));
-  for (var i = 0; i < Math.PI * 2; i += dr)
-    pointsOrigin.push(scaleAndTranslate(heartPosition(i), 190, 11, 0, 0));
-
-  var heartPointsCount = pointsOrigin.length;
-  var targetPoints = [];
-
-  function pulse(kx, ky) {
-    for (var i = 0; i < pointsOrigin.length; i++) {
-      targetPoints[i] = [
-        kx * pointsOrigin[i][0] + width / 2,
-        ky * pointsOrigin[i][1] + height / 2.2,
-      ];
-    }
-  }
-
   var e = [];
   for (var i = 0; i < heartPointsCount; i++) {
     var x = rand() * width;
@@ -107,6 +107,15 @@ function init() {
 
   var config = { traceK: 0.4, timeDelta: 0.6 };
   var time = 0;
+
+  function pulse(kx, ky) {
+    for (var i = 0; i < pointsOrigin.length; i++) {
+      targetPoints[i] = [
+        kx * pointsOrigin[i][0] + width / 2,
+        ky * pointsOrigin[i][1] + height / 2.2,
+      ];
+    }
+  }
 
   function loop() {
     var n = -Math.cos(time);
