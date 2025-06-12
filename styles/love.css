@@ -1,0 +1,63 @@
+﻿body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+#elapsed-time {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px 30px;
+    border-radius: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 1.2em;
+    max-width: 95%;
+    text-align: center;
+}
+
+.time-value {
+    text-align: center;
+    min-width: 60px;
+}
+
+    .time-value span {
+        display: block;
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #ff5555;
+    }
+
+/* 📱 Мобильная адаптация */
+@media (max-width: 600px) {
+    #elapsed-time {
+        flex-direction: row;
+        gap: 10px;
+        padding: 15px 10px;
+        font-size: 1em;
+        bottom: 20px;
+    }
+
+    .time-value {
+        min-width: 50px;
+    }
+
+        .time-value span {
+            font-size: 1.4em;
+        }
+}
+
+canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 0, 0, 0.2);
+}
