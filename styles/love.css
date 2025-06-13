@@ -28,12 +28,12 @@ body {
     min-width: 60px;
 }
 
-.time-value span {
-    display: block;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #ff5555;
-}
+    .time-value span {
+        display: block;
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #aaaaaa;
+    }
 
 @media (max-width: 600px) {
     #elapsed-time {
