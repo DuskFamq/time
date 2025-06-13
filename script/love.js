@@ -25,7 +25,7 @@ function init() {
     if (loaded) return;
     loaded = true;
     var mobile = window.isDevice;
-    var koef = mobile ? 0.5 : 1;
+    var koef = 1;
     var canvas = document.getElementById("heart");
     var ctx = canvas.getContext("2d");
     var width = (canvas.width = koef * innerWidth);
@@ -34,13 +34,6 @@ function init() {
 
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.fillRect(0, 0, width, height);
-
-    function drawText() {
-        ctx.font = "60px Arial";
-        ctx.fillStyle = "lightblue";
-        ctx.textAlign = "center";
-        ctx.fillText("", width / 2, height / 2.2 + 400);
-    }
 
     function heartPosition(rad) {
         return [
@@ -65,14 +58,11 @@ function init() {
     function setupPoints() {
         pointsOrigin = [];
         let heartScale = mobile ? Math.min(width, height) / 2.7 : Math.min(width, height) / 4; // адаптивный масштаб
-        let dr = mobile ? 0.3 : 0.1;
+        let dr = mobile ? 0.1 : 0.1;
 
         for (let i = 0; i < Math.PI * 2; i += dr)
             pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale, heartScale / 16, 0, 0));
-        for (let i = 0; i < Math.PI * 2; i += dr)
-            pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale * 0.8, heartScale / 20, 0, 0));
-        for (let i = 0; i < Math.PI * 2; i += dr)
-            pointsOrigin.push(scaleAndTranslate(heartPosition(i), heartScale * 0.6, heartScale / 28, 0, 0));
+       
 
         heartPointsCount = pointsOrigin.length;
     }
@@ -99,7 +89,7 @@ function init() {
             speed: rand() + 5,
             q: ~~(rand() * heartPointsCount),
             D: 2 * (i % 2) - 1,
-            force: 0.2 * rand() + 0.7,
+            force: 0.2 * rand() + 0.2,
             f: "rgb(255, 33, 33)",
             trace: Array.from({ length: traceCount }, () => ({ x, y })),
         };
@@ -160,7 +150,6 @@ function init() {
             u.trace.forEach((t) => ctx.fillRect(t.x, t.y, 1, 1));
         }
 
-        drawText();
         window.requestAnimationFrame(loop, canvas);
     }
 
