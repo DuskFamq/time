@@ -23,32 +23,46 @@
 
     <script src="script/love.js"></script>
     <script>
-        const startTime = new Date('2025-04-13T03:00:00');
+        const startTime = new Date('2025-04-13T00:00:00');
 
         function updateElapsedTime() {
-            const currentTime = new Date();
-            let diff = currentTime - startTime;
+     	const now = new Date();
 
-            const msInSecond = 1000;
-            const msInMinute = msInSecond * 60;
-            const msInHour = msInMinute * 60;
-            const msInDay = msInHour * 24;
-            const msInMonth = msInDay * 30.44;
-            const msInYear = msInDay * 365.25;
+        let years = now.getFullYear() - startTime.getFullYear();
+        let months = now.getMonth() - startTime.getMonth();
+        let days = now.getDate() - startTime.getDate();
+        let hours = now.getHours() - startTime.getHours();
+        let minutes = now.getMinutes() - startTime.getMinutes();
+        let seconds = now.getSeconds() - startTime.getSeconds();
 
-            const years = Math.floor(diff / msInYear); diff %= msInYear;
-            const months = Math.floor(diff / msInMonth); diff %= msInMonth;
-            const days = Math.floor(diff / msInDay); diff %= msInDay;
-            const hours = Math.floor(diff / msInHour); diff %= msInHour;
-            const minutes = Math.floor(diff / msInMinute); diff %= msInMinute;
-            const seconds = Math.floor(diff / msInSecond);
+        if (seconds < 0) {
+            seconds += 60;
+            minutes--;
+          }
+        if (minutes < 0) {
+            minutes += 60;
+            hours--;
+          }
+        if (hours < 0) {
+            hours += 24;
+            days--;
+          }
+        if (days < 0) {
+            const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+            days += prevMonth.getDate();
+            months--;
+          }
+        if (months < 0) {
+            months += 12;
+            years--;
+          }
 
-            document.getElementById("years").textContent = years;
-            document.getElementById("months").textContent = months;
-            document.getElementById("days").textContent = days;
-            document.getElementById("hours").textContent = hours;
-            document.getElementById("minutes").textContent = minutes;
-            document.getElementById("seconds").textContent = seconds;
+        document.getElementById("years").textContent = years;
+        document.getElementById("months").textContent = months;
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
         }
 
         setInterval(updateElapsedTime, 1000);
