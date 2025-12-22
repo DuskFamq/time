@@ -14,59 +14,13 @@
 
     <div id="elapsed-time">
         <div class="time-value"><span id="years">0</span>Years</div>
-        <div class="time-value"><span id="months">0</span>Month</div>
-        <div class="time-value"><span id="days">0</span>Days</div>
-        <div class="time-value"><span id="hours">0</span>Hours</div>
-        <div class="time-value"><span id="minutes">0</span>Minutes</div>
-        <div class="time-value"><span id="seconds">0</span>Seconds</div>
+        <div class="time-value"><span id="months">8</span>Month</div>
+        <div class="time-value"><span id="days">10</span>Days</div>
+        <div class="time-value"><span id="hours">15</span>Hours</div>
+        <div class="time-value"><span id="minutes">13</span>Minutes</div>
+        <div class="time-value"><span id="seconds">7</span>Seconds</div>
     </div>
 
-    <script src="script/love.js"></script>
-    <script>
-        const startTime = new Date('2025-04-12T00:00:00');
 
-        function updateElapsedTime() {
-     	const now = new Date();
-
-        let years = now.getFullYear() - startTime.getFullYear();
-        let months = now.getMonth() - startTime.getMonth();
-        let days = now.getDate() - startTime.getDate();
-        let hours = now.getHours() - startTime.getHours();
-        let minutes = now.getMinutes() - startTime.getMinutes();
-        let seconds = now.getSeconds() - startTime.getSeconds();
-
-        if (seconds < 0) {
-            seconds += 60;
-            minutes--;
-          }
-        if (minutes < 0) {
-            minutes += 60;
-            hours--;
-          }
-        if (hours < 0) {
-            hours += 24;
-            days--;
-          }
-        if (days < 0) {
-            const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-            days += prevMonth.getDate();
-            months--;
-          }
-        if (months < 0) {
-            months += 12;
-            years--;
-          }
-
-        document.getElementById("years").textContent = years;
-        document.getElementById("months").textContent = months;
-        document.getElementById("days").textContent = days;
-        document.getElementById("hours").textContent = hours;
-        document.getElementById("minutes").textContent = minutes;
-        document.getElementById("seconds").textContent = seconds;
-        }
-
-        setInterval(updateElapsedTime, 1000);
-        updateElapsedTime();
-    </script>
 </body>
 </html>
